@@ -2,44 +2,58 @@ package easymask
 
 import (
   "net"
+  "errors"
 )
 
 // IPv4Masks contains a map of
 type IPv4Masks struct {
-  Masks map[unit]net.IPMask
+  Masks map[uint]net.IPMask
 }
 
 // AddMask adds a new mask to the IPv4Masks struct
-func (ipv4m *IPv4Masks) AddMask(bits unit, mask net.IPMask)) error {
+func (ipv4m *IPv4Masks) AddMask(bits uint, mask net.IPMask) error {
   //check if mask exists
   //if so error
   //if not add
+  if ipv4m.Masks[bits] == nil {
+      ipv4m.Masks[bits] = mask
+  } else {
+      errors.New("Mask already exists")
+  }
+  return nil
 }
 
 // RemoveMask removes the mask from the IPv4Masks struct
-func (ipv4m *IPv4Masks) RemoveMask(bits unit) error {
+func (ipv4m *IPv4Masks) RemoveMask(bits uint) error {
   //check if mask exists
   //if so remove
+  if ipv4m.Masks[bits] != nil {
+      delete(ipv4m.Masks,bits)
+      return nil
+  } else {
+      return errors.New("Mask does not exist")
+  }
+  return nil
 }
 
 // String returns the specified mask as a string
-func (ipv4m *IPv4Masks) String(bits unit) string {
+func (ipv4m *IPv4Masks) String(bits uint) string {
   rMask := ipv4m.Masks[bits]
   if rMask == nil {
-    //error
+    return ""
   }
-  return rMask
+  return rMask.String()
 }
 
 // IPMask returns the specified mask as an net.IPMask
-func (ipv4m *IPv4Masks) IPMask(bits unit) net.IPMask {
-
+func (ipv4m *IPv4Masks) IPMask(bits uint) net.IPMask {
+    return ipv4m.Masks[bits]
 }
 
 // NewIPv4Masks generates an IPv4Masks struct that contains all 33 possible masks
 func NewIPv4Masks() IPv4Masks {
   ipv4m := IPv4Masks{}
-  ipv4m.Masks = make(map[string]net.IPMask)
+  ipv4m.Masks = make(map[uint]net.IPMask)
   ipv4m.Masks[0] = []byte{0,0,0,0}
   ipv4m.Masks[1] = []byte{128,0,0,0}
   ipv4m.Masks[2] = []byte{192,0,0,0}
@@ -73,4 +87,5 @@ func NewIPv4Masks() IPv4Masks {
   ipv4m.Masks[30] = []byte{255,255,255,252}
   ipv4m.Masks[31] = []byte{255,255,255,254}
   ipv4m.Masks[32] = []byte{255,255,255,255}
+  return ipv4m
 }

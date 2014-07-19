@@ -9,6 +9,6 @@ import (
 type EasyMask interface {
   AddMask() error
   RemoveMask() error
-  String() unit
+  String() uint
   IPMask() net.IPMask
 }

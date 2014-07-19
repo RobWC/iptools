@@ -1,4 +1,4 @@
-package ipcheck
+package martiancheck
 
 import (
   "testing"
