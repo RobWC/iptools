@@ -5,7 +5,7 @@ import (
   "errors"
 )
 
-// IPv4Masks contains a map of
+// IPv4Masks contains a map of all the available bitmasks
 type IPv4Masks struct {
   Masks map[uint]net.IPMask
 }
