@@ -2,7 +2,6 @@ package martiancheck
 
 import (
   "net"
-  "github.com/robwc/"
 )
 
 // IPChecker is an interface to check if an IP address is within a martian address range or not.
