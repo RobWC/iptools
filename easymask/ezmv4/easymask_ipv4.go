@@ -1,4 +1,4 @@
-package easymask
+package ezmv4
 
 import (
   "net"
