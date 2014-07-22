@@ -1,4 +1,4 @@
-package ezmv4
+package easymaskv4
 
 import (
     "net"

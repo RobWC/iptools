@@ -1,28 +1,21 @@
 package martiancheck
 
 import (
-  "testing"
+    "net"
+    "testing"
 )
 
 func TestNewIPv4MartianChecker(t *testing.T) {
   ipch := NewIPv4MartianChecker(true)
-  if len(ipch.Masks) > 0 {
-    if len(ipch.IPUnused) > 0 {
-      t.Log("Success on true!")
+}
+
+func TestContains(t *T.testing) {
+    ipch := &MartianIPv4Checker{}
+    ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{0,0,0,0},Mask:maskch.Masks["8"]})
+    result := ipch.Contains([]byte{0.0.0.1})
+    if result {
+        fmt.Println("IP contained within martians block")
     } else {
-      t.Fatalf("IP Used Unset on true")
+        t.Fail()
     }
-  } else {
-    t.Fatalf("IP Masks Unset on true")
-  }
-  ipch2 := NewIPv4MartianChecker(false)
-  if len(ipch2.Masks) > 0 {
-    if len(ipch2.IPUnused) == 0 {
-      t.Log("Success on false!")
-    } else {
-      t.Fatalf("IP Used Set on false")
-    }
-  } else {
-    t.Fatalf("IP Masks Set on false")
-  }
 }
