@@ -6,17 +6,21 @@ import (
     "testing"
 )
 
-func TestNewIPv4MartianChecker(t *testing.T) {
-  ipch := NewMartianIPv4Checker(true)
+func TestNewMartianChecker(t *testing.T) {
+  ipch := NewMartianChecker(4)
   if len(ipch.Martians) == 14{
-      fmt.Println("MartianIPv4Checker created correctly")
+      fmt.Println("MartianChecker IPv4 created correctly")
   } else {
       t.Fail()
+  }
+  ipch2 := NewMartianChecker(6)
+  if len(ipch2.Martians) == 11 {
+      fmt.Println("MartainChecker IPv6 created correctly")
   }
 }
 
 func TestContains(t *testing.T) {
-    ipch := &MartianIPv4Checker{}
+    ipch := &MartianChecker{}
     ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{0,0,0,0},Mask:[]byte{128,0,0,0}})
     result := ipch.Contains([]byte{0,0,0,1})
     if result {
@@ -27,7 +31,7 @@ func TestContains(t *testing.T) {
 }
 
 func TestAddMartianNet(t *testing.T) {
-    ipch := &MartianIPv4Checker{}
+    ipch := &MartianChecker{}
     ipch.AddMartianNet(net.IPNet{IP:[]byte{0,0,0,0},Mask:[]byte{128,0,0,0}})
     if len(ipch.Martians) == 1 {
         fmt.Println("Martian successfully created")
@@ -37,7 +41,7 @@ func TestAddMartianNet(t *testing.T) {
 }
 
 func TestRemoveMartianNet(t *testing.T) {
-    ipch := &MartianIPv4Checker{}
+    ipch := &MartianChecker{}
     ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{0,0,0,0},Mask:[]byte{128,0,0,0}})
     if len(ipch.Martians) == 1 {
         result := ipch.RemoveMartianNet(net.IPNet{IP:[]byte{0,0,0,0},Mask:[]byte{128,0,0,0}})
@@ -52,7 +56,7 @@ func TestRemoveMartianNet(t *testing.T) {
 }
 
 func TestRemoveAllMartianNet(t *testing.T) {
-    ipch := &MartianIPv4Checker{}
+    ipch := &MartianChecker{}
     ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{0,0,0,0},Mask:[]byte{128,0,0,0}})
     ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{1,0,0,0},Mask:[]byte{128,0,0,0}})
     ipch.Martians = append(ipch.Martians,net.IPNet{IP:[]byte{2,0,0,0},Mask:[]byte{128,0,0,0}})
@@ -67,18 +71,3 @@ func TestRemoveAllMartianNet(t *testing.T) {
         t.Fail()
     }
 }
-
-/*
-func main() {
-  ipch := NewIPv4MartianChecker(true)
-  maskch := ezmv4.NewIPv4Masks()
-  log.Println(len(ipch.Martians))
-  log.Println(ipch.Contains([]byte{11,0,0,1}))
-  ipch.AddMartianNet(net.IPNet{IP:[]byte{11,0,0,0},Mask:maskch.Masks["24"]})
-  log.Println(ipch.Contains([]byte{11,0,0,1}))
-  ipch.RemoveMartianNet(net.IPNet{IP:[]byte{11,0,0,0},Mask:maskch.Masks["24"]})
-  log.Println(ipch.Contains([]byte{11,0,0,1}))
-  ipch.RemoveAllMartianNet()
-  log.Println(len(ipch.Martians))
-}
-*/
