@@ -10,7 +10,7 @@ var (
     IPv4Mask6 = []byte{252,0,0,0}
     IPv4Mask7 = []byte{254,0,0,0}
     IPv4Mask8 = []byte{255,0,0,0}
-    IPv4Mask9 = []]byte{255,128,0,0}
+    IPv4Mask9 = []byte{255,128,0,0}
     IPv4Mask10 = []byte{255,192,0,0}
     IPv4Mask11 = []byte{255,224,0,0}
     IPv4Mask12 = []byte{255,240,0,0}
